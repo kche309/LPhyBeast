@@ -786,6 +786,7 @@ public class BEASTContext {
         }
 
         operators.addAll(extraOperators);
+
         operators.sort(Comparator.comparing(BEASTObject::getID));
 
         return operators;
@@ -1089,6 +1090,9 @@ public class BEASTContext {
                 operator.setInputValue("parameter", parameter);
                 operator.setInputValue("weight", getOperatorWeight(parameter.getDimension() - 1));
                 operator.setInputValue("delta", 1.0 / value.length);
+                if (generativeDistribution instanceof Dirichlet ) {
+                    operator.setInputValue("autoOptimize", false);
+                }
                 operator.initAndValidate();
                 operator.setID(parameter.getID() + ".deltaExchange");
             } else {
